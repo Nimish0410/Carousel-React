@@ -79,7 +79,9 @@ export default class Carousel extends React.Component {
       newTransformValue = newTransformValue - this.state.width / 2;
       if (
         newTransformValue <
-        -(carouselProperties.carouselItems * carouselProperties.carouselItems)
+        -(
+          carouselProperties.carouselItems * carouselProperties.desktopItemWidth
+        )
       ) {
         this.updateTransformValue(0);
       } else {
@@ -114,9 +116,7 @@ export default class Carousel extends React.Component {
           {...css(componentStyles.carouselItemsWrapper)}
           style={{
             transform: "translateX(" + this.state.transformValue + "px)",
-            width:
-              this.state.width * (carouselProperties.carouselItems + 1) +
-              carouselProperties.bufferWidth
+            width: this.state.width * (carouselProperties.carouselItems + 1)
           }}
         >
           {carouselItems}
