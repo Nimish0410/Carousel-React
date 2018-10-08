@@ -12,6 +12,13 @@ Notes:
 8. The carousel is made to look as close to the mockups provided and is cross browser compatible.
 9. Git has been used with the help of gitbash.
 
+GIT WORKFLOW:
+
+1. Branch out the bug-fix branch from develop.
+2. Merge the bug-fix branch into develop.(Raise a pull-request)
+3. Get this merge reviewed.
+4. After the code-freeze merge develop into master.
+
 To run the project:
 
 - Move inside the root folder.
