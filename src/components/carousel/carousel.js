@@ -6,6 +6,7 @@ import ArrowIcon from "../../assets/icons/arrow.svg";
 export default class Carousel extends React.Component {
   constructor(props) {
     super(props);
+    this.handleNext.bind(this);
 
     this.state = {
       transformValue: 0,
@@ -27,6 +28,7 @@ export default class Carousel extends React.Component {
   }
 
   handlePrevious = () => {
+    // translateX towards right i.e positive
     let newTransformValue = this.state.transformValue;
 
     if (this.state.width < carouselProperties.mobileThreshold) {
@@ -44,10 +46,7 @@ export default class Carousel extends React.Component {
         this.updateTransformValue(newTransformValue);
       }
     } else {
-      if (
-        newTransformValue >
-        carouselProperties.carouselItems * carouselProperties.desktopItemWidth
-      ) {
+      if (newTransformValue === 0) {
         this.updateTransformValue(0);
       } else if (newTransformValue < 0) {
         newTransformValue =
@@ -58,6 +57,7 @@ export default class Carousel extends React.Component {
   };
 
   handleNext = () => {
+    // translateX towards left i.e. negative
     let newTransformValue = this.state.transformValue;
 
     if (this.state.width < carouselProperties.mobileThreshold) {
@@ -76,11 +76,14 @@ export default class Carousel extends React.Component {
       }
     } else {
       //move the carousel by half the sreen width
-      newTransformValue = newTransformValue - this.state.width / 2;
+      newTransformValue =
+        newTransformValue - carouselProperties.desktopItemWidth;
       if (
         newTransformValue <
         -(
-          carouselProperties.carouselItems * carouselProperties.desktopItemWidth
+          (carouselProperties.carouselItems -
+            carouselProperties.itemsPerFrame) *
+          carouselProperties.desktopItemWidth
         )
       ) {
         this.updateTransformValue(0);
@@ -116,7 +119,7 @@ export default class Carousel extends React.Component {
           {...css(componentStyles.carouselItemsWrapper)}
           style={{
             transform: "translateX(" + this.state.transformValue + "px)",
-            width: this.state.width * (carouselProperties.carouselItems + 1)
+            width: this.state.width * carouselProperties.carouselItems
           }}
         >
           {carouselItems}
@@ -159,6 +162,7 @@ export default class Carousel extends React.Component {
 export const carouselProperties = {
   mobileThreshold: 768,
   carouselItems: 8,
+  itemsPerFrame: 5,
   bufferWidth: 500,
-  desktopItemWidth: 268
+  desktopItemWidth: 288
 };
